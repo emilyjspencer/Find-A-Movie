@@ -8,7 +8,9 @@ app.set("view engine", "ejs");
 console.log(process.env);
 
 app.get("/movies", function(req, res) {
-  request("http://omdbapi.com/?s=africa&apikey=key", function(error, response, body) { 
+  const querystring = req.query.search;
+  const url="http://omdbapi.com/?s=" + querystring + "&apikey=key"
+  request(url, function(error, response, body) { 
     if(!error && response.statusCode == 200)
     var movies = JSON.parse(body)
       res.render("movies", {data: movies})
